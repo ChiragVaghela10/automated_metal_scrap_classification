@@ -1,0 +1,21 @@
+name: yolov5
+
+docker_env:
+    image: Dockerfile
+    # network: host # This can be commented if the URI can be accessed externally.
+
+entry_points:
+    main:
+        parameters:
+            data_file: {type: string, default: "./data/sym.yaml"}
+            cfg_file: {type: string, default: "./models/yolov5s.yaml"}
+            batch_size: {type: int, default: 16}
+            workers: {type: int, default: 2}
+            epochs: {type: int, default: 5}
+        command: |
+            python train.py \
+            --data {data_file} \
+            --cfg {cfg_file} \
+            --batch-size {batch_size} \
+            --workers {workers} \
+            --epochs {epochs}

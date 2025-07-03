@@ -1,0 +1,6 @@
+path: datasets/scrap_yard_original
+train: images/train
+val: images/val
+
+nc: 2
+names: [ 'turnings', 'rails' ]
