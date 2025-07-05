@@ -21,6 +21,8 @@ techniques.
 - **Supervisors:** Prof. Dr. Stephan Kettemann, Dr. Christoph Kirmse
 - **Collaboration:** SMS digital GmbH, Mönchengladbach
 
+The full PDF version of the thesis can be accessed [here](docs/Masters_Thesis.pdf).
+
 ## Problem Statement
 This project automates the detection and classification of metal scrap in railway containers through computer vision. 
 The implementation uses YOLOv5's small model architecture (YOLOv5s) to 
@@ -42,6 +44,8 @@ real-world scrapyard images. <br/>
 🧠 Focus areas: image processing, YOLOv5 tuning, model ensemble, and real time inference <br/>
 🏛️ Published by: Association for Iron & Steel Technology (AIST) <br/>
 
+NOTE: The above link provides access to the abstract-only version, but full paper access can be granted upon request.
+
 ## Dataset
 - Source: Top-view images of railway scrap containers from SMS group facilities.
 - Classes:
@@ -52,6 +56,7 @@ real-world scrapyard images. <br/>
 Turnings sample             |  Rails sample
 :--------------------------:|:-------------------------:
 ![image](img/turnings.png)  | ![image](img/rails.png)
+
 Table 1: comparison of Turnings and Rails scrap type
 
 ## Methodology
@@ -69,6 +74,8 @@ types of operations chosen for this project:
 (b) non-local denoising operation using OpenCV library
 (c) Contrast-Limited Adaptive Histogram Equalization (CLAHE) using OpenCV library 
 
+The augmentation is performed on the train set before the start of each epoch during training to generate 
+a new train set on each epoch. This resulted in diversified augmented dataset for the model to train upon.
 The operations are also performed in combination to generate more diversified copies of the original train set. The 
 training of the YOLOv5 algorithm is performed on these augmented and enhanced datasets.
 
@@ -88,13 +95,15 @@ and performance parameters.
 |      8       |   3   |       Dataset preprocessed with CLAHE operation and augmentations       |
 |      9       |   3   |     Dataset preprocessed with denoising operation and augmentations     |
 |      10      |   3   |      Dataset preprocessed with denoising, CLAHE, and augmentations      |
-Table 2: Operations performed on train set
+
+Table 2: Operations performed on the train set
 
 The example image with CLAHE operation performed is shown below:
 
 |  Original train set image  | Train set image preprocessed using CLAHE operation |
 |:--------------------------:|:--------------------------------------------------:|
 | ![image](img/original.png) |              ![image](img/clahe.png)               |
+
 Table 3: comparison of original and preprocessed (CLAHE operation) dataset image
 
 #### Annotations
@@ -119,18 +128,24 @@ Figure 1: CVAT Interface for image annotation
 The preprocessed training sets are pushed to AWS S3 bucket using DVC. Then the actual training is performed with 
 the project instance running on AWS EC2.
 
-![image](img/training.png) <br/>
+![image](img/training_architecture.png) <br/>
 Figure 2: Architecture diagram for the training phase
+
+### Training Implementation
+
+- The smallest and fastest base model of YOLOv5 (`YOLOv5s`) was used for training.
+- The Python script `train.py` provided officially by YOLOv5 was utilized, along with the `YOLOv5s.pt` weights and 
+the `sym.yaml` configuration file, to train the model over 350 epochs.
 
 ### 2. Inference
 
-The obtained model weights after each training run are stored in the S3 bucket. These trained model weights are used to
-perform inference on the test set. The confidence threshold value 0.5 was chosen for detection. The results are also 
-saved in text form containing the annotations in addition to predicting bounding box, confidence score, and scrap type 
-in images as shown below:
+The obtained model weights after each training run are stored in the S3 bucket for future reference. These trained 
+model weights are used to perform inference on the test set. The confidence threshold value 0.5 was chosen for 
+detection. The results are also saved in text form containing the annotations in addition to predicting bounding 
+box, confidence score, and scrap type in images as shown below:
 
 ![image](img/inference.png)
-Figure 3: (a) Test set image with predicted bounding boxes, scrap type, confidence score (b) text file containing 
+Figure 3: Test set image with predicted bounding boxes, scrap type, confidence score (b) text file containing 
 labels for the same image
 
 The architecture of the inference phase is shown below: <br/><br/>
@@ -138,12 +153,43 @@ The architecture of the inference phase is shown below: <br/><br/>
 Figure 4: Architecture diagram for the inference phase
 
 ## Results
-<cvat and other stuffs to be added>
+The model trained on different train sets produces different results on the test set upon inference. The algorithm runs
+are studied in three groups to analyze the effect of augmentation, denoising, and CLAHE operations using *wandb* 
+visualization tool.
 
-<train/val loss diagrams to be added>
+![image](img/prediction_comparison.png) <br/>
+Figure 5: model performance comparison trained on original vs augmented dataset
+
+### Model Performance
+
+The performance parameter values for the different group runs are shown in the tables below:
+
+![group1_para_values.png](img/group1_para_values.png)
+<br/> Figure 6: performance parameter values for group1 runs <br/><br/> 
+![group2_para_values.png](img/group2_para_values.png)
+<br/> Figure 7: performance parameter values for group2 runs <br/><br/> 
+![group3_para_values.png](img/group3_para_values.png)
+<br/> Figure 8: performance parameter values for group3 runs <br/><br/> 
+
+The confusion matrices for different runs are shown in the below figures: <br/><br/>
+![grp1_cm.png](img/grp1_cm.png)
+<br/> Figure 9: confusion matrices for group1 runs <br/><br/> 
+![grp2_cm.png](img/grp2_cm.png)
+<br/> Figure 10: confusion matrices for group2 runs <br/><br/> 
+![grp3_cm.png](img/grp3_cm.png)
+<br/> Figure 11: confusion matrices for group3 runs <br/><br/> 
 
 ### Key Findings
-<>
+- The best mAP<sub>0.5</sub> value of 0.995 is observed with training run 6, 7, 9, and 10 mentioned in table 2 compared 
+to mAP<sub>0.5</sub> value of 0.9895 with model trained on original dataset.
+- The preprocessing operations caused best epoch to shift to lower values and allowed model for early stopping in 
+some cases, i.e., training run 9 to conclude faster convergence.
+- The average confidence value was calculated for TP cases of detected scrap types for each run using a custom 
+Python script. The average confidence value is plotted for each run as shown in the below figure. The green line shows 
+the benchmarking average confidence value for the algorithm trained on the original dataset.
+
+![avg_confidence_score.png](img/avg_confidence_score.png)
+Figure 12: Average confidence score for each run
 
 ## Installation
 ```bash
@@ -153,7 +199,7 @@ cd automated_metal_scrap_classification
 pip install -r requirements.txt
 
 # Train YOLOv5
-python train.py --data config/data.yaml --weights models/yolov5s.pt --epochs 300
+python train.py --data data/sym.yaml --weights models/yolov5s.pt --epochs 350
 
 # Run inference
 python detect.py --weights models/best.pt --source data/sym_data/scrap/
