@@ -157,29 +157,30 @@ The model trained on different train sets produces different results on the test
 are studied in three groups to analyze the effect of augmentation, denoising, and CLAHE operations using *wandb* 
 visualization tool.
 
-Predctions on original image |  Predctions on augmented dataset
-:---------------------------:|:-------------------------:
+Predctions on original image      |  Predctions on augmented dataset
+:--------------------------------:|:-------------------------:
 ![image](img/original_pred.png)   | ![image](img/aug_pred.png)
-Figure 5: model performance comparison trained on original vs augmented dataset
+
+<br/>Table 4: model performance comparison trained on original vs augmented dataset
 
 ### Model Performance
 
 The performance parameter values for the different group runs are shown in the tables below:
 
 ![group1_para_values.png](img/group1_para_values.png)
-<br/> Figure 6: performance parameter values for group1 runs <br/><br/> 
+<br/> Figure 5: performance parameter values for group1 runs <br/><br/> 
 ![group2_para_values.png](img/group2_para_values.png)
-<br/> Figure 7: performance parameter values for group2 runs <br/><br/> 
+<br/> Figure 6: performance parameter values for group2 runs <br/><br/> 
 ![group3_para_values.png](img/group3_para_values.png)
-<br/> Figure 8: performance parameter values for group3 runs <br/><br/> 
+<br/> Figure 7: performance parameter values for group3 runs <br/><br/> 
 
 The confusion matrices for different runs are shown in the below figures: <br/><br/>
 ![grp1_cm.png](img/grp1_cm.png)
-<br/> Figure 9: confusion matrices for group1 runs <br/><br/> 
+<br/> Figure 8: confusion matrices for group1 runs <br/><br/> 
 ![grp2_cm.png](img/grp2_cm.png)
-<br/> Figure 10: confusion matrices for group2 runs <br/><br/> 
+<br/> Figure 9: confusion matrices for group2 runs <br/><br/> 
 ![grp3_cm.png](img/grp3_cm.png)
-<br/> Figure 11: confusion matrices for group3 runs <br/><br/> 
+<br/> Figure 10: confusion matrices for group3 runs <br/><br/> 
 
 ### Key Findings
 - The best mAP<sub>0.5</sub> value of 0.995 is observed with training run 6, 7, 9, and 10 mentioned in table 2 compared 
@@ -191,7 +192,7 @@ Python script. The average confidence value is plotted for each run as shown in 
 the benchmarking average confidence value for the algorithm trained on the original dataset.
 
 ![avg_confidence_score.png](img/avg_confidence_score.png)
-Figure 12: Average confidence score for each run
+Figure 11: Average confidence score for each run
 
 ## Installation
 ```bash
