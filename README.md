@@ -145,7 +145,7 @@ detection. The results are also saved in text form containing the annotations in
 box, confidence score, and scrap type in images as shown below:
 
 ![image](img/inference.png)
-Figure 3: Test set image with predicted bounding boxes, scrap type, confidence score (b) text file containing 
+Figure 3: (a) test set image with predicted bounding boxes, scrap type, confidence score (b) text file containing 
 labels for the same image
 
 The architecture of the inference phase is shown below: <br/><br/>
@@ -157,7 +157,9 @@ The model trained on different train sets produces different results on the test
 are studied in three groups to analyze the effect of augmentation, denoising, and CLAHE operations using *wandb* 
 visualization tool.
 
-![image](img/prediction_comparison.png) <br/>
+Predctions on original image |  Predctions on augmented dataset
+:---------------------------:|:-------------------------:
+![image](img/original_pred.png)   | ![image](img/aug_pred.png)
 Figure 5: model performance comparison trained on original vs augmented dataset
 
 ### Model Performance
