@@ -161,7 +161,7 @@ Predctions on original image      |  Predctions on augmented dataset
 :--------------------------------:|:-------------------------:
 ![image](img/original_pred.png)   | ![image](img/aug_pred.png)
 
-<br/>Table 4: model performance comparison trained on original vs augmented dataset
+Table 4: model performance comparison trained on original vs augmented dataset
 
 ### Model Performance
 
@@ -192,6 +192,7 @@ Python script. The average confidence value is plotted for each run as shown in 
 the benchmarking average confidence value for the algorithm trained on the original dataset.
 
 ![avg_confidence_score.png](img/avg_confidence_score.png)
+
 Figure 11: Average confidence score for each run
 
 ## Installation
