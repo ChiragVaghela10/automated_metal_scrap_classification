@@ -40,7 +40,7 @@ Co-authored a research paper presented at AISTech 2023. This applied research co
 industrial-scale project at the SMS group. The solution leveraged YOLOv5 for automated scrap classification using 
 real-world scrapyard images. <br/>
 🔗 Paper: [Classifications of Scrap Types using Computer Vision algorithms](https://imis.aist.org/AISTPapers/Abstracts_Only_PDF/PR-387-076.pdf) <br/>
-📍 Page: 665 | DOI: 10.33313/387/076 <br/>
+📍 Page: 665 | DOI: [10.33313/387/076](https://doi.org/10.33313/387/076) <br/>
 🧠 Focus areas: image processing, YOLOv5 tuning, model ensemble, and real time inference <br/>
 🏛️ Published by: Association for Iron & Steel Technology (AIST) <br/>
 
